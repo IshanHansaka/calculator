@@ -3,7 +3,7 @@
 #define Max_size 100
 
 char arr[Max_size];
-char stack[Max_size];
+int stack[Max_size];
 int top = -1;
 
 bool isEmpty();
