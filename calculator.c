@@ -11,6 +11,7 @@ bool isFull();
 void push(char data);
 char pop();
 char peak();
+int precedence(char symbol);
 
 bool isEmpty() {
     return top == -1;
@@ -39,6 +40,21 @@ char peak() {
         return '\0';
     }
     return stack[top];
+}
+
+int precedence(char symbol) {
+    switch (symbol) {
+        case '^':
+            return 3;
+        case '*':
+        case '/':
+            return 2;
+        case '+':
+        case '-':
+            return 1;
+        default:
+            return 0;
+    }
 }
 
 int main() {
