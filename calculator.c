@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #define Max_size 100
 
-char arr[Max_size];
+char postfix[Max_size];
 int stack[Max_size];
 int top = -1;
 
@@ -68,7 +68,7 @@ void infixToPostfix(char equation[100]) {
                 break;
             case ')':
                 while ((next = pop()) != '(') {
-                    arr[arr_index++] = next;
+                    postfix[arr_index++] = next;
                 }
                 break;
             case '+':
@@ -77,33 +77,61 @@ void infixToPostfix(char equation[100]) {
             case '/':
             case '^':
                 while (!isEmpty() && precedence(equation[i]) <= precedence(peak())) {
-                    arr[arr_index++] = pop();
+                    postfix[arr_index++] = pop();
                 }
                 push(equation[i]);
                 break;
             default:
-                arr[arr_index++] = equation[i];
+                postfix[arr_index++] = equation[i];
                 break;
         }
         i++;
     }
 
     while (!isEmpty()) {
-        arr[arr_index++] = pop();
+        postfix[arr_index++] = pop();
     }
-    arr[arr_index] = '\0';
+    postfix[arr_index] = '\0';
 }
 
 int postfixtoAnswer(char equation[100]) {
+    int i = 0;
+    int num1, num2;
+    while (equation[i] != '\0') {
+        if (equation[i] <= '9' && equation[i] >= '0') {
+            push(equation[i] - '0');
+        } 
+        else {
+            num1 = pop();
+            num2 = pop();
+            switch (equation[i]) {
+                case '+':
+                    push(num1 + num2);break;
+                case '-':                
+                    push(num1 - num2);break;
+                case '*':
+                    push(num1 * num2);break;
+                case '/':
+                    push(num1 / num2);break;
+                case '^':
+                    push(num1 ^ num2);break;
+            }
+        }
+        i++;
+    }
+    return pop();
 }
 
 int main() {
-    char equation[100];
-    printf("Enter the equation: ");
-    scanf("%s", equation);
+    char expression[100];
+    printf("Enter the infix expression: ");
+    scanf("%s", expression);
 
-    infixToPostfix(equation);
+    infixToPostfix(expression);
 
-    printf("Postfix expression: %s\n", arr);
+    printf("Postfix expression: %s\n", postfix);
+
+    int answer = postfixtoAnswer(postfix);
+    printf("Answer: %d\n", answer);
     return 0;
 }
