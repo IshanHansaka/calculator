@@ -10,12 +10,12 @@ int top = -1;
 
 bool isEmpty();
 bool isFull();
-void push(char data);
-char pop();
-char peak();
+void push(int data);
+int pop();
+int peak();
 int precedence(char symbol);
 void infixToPostfix(char equation[100]);
-int postfixtoAnswer(char equation[100]);
+int postfixToAnswer(char equation[100]);
 
 bool isEmpty() {
     return top == -1;
@@ -25,23 +25,23 @@ bool isFull() {
     return top == Max_size - 1;
 }
 
-void push(char data) {
+void push(int data) {
     if (isFull()) {
         return;
     }
     stack[++top] = data;
 }
 
-char pop() {
+int pop() {
     if (isEmpty()) {
-        return '\0';
+        return -1;
     }
     return stack[top--];
 }
 
-char peak() {
+int peak() {
     if (isEmpty()) {
-        return '\0';
+        return -1;
     }
     return stack[top];
 }
@@ -97,12 +97,12 @@ void infixToPostfix(char equation[100]) {
     postfix[arr_index] = '\0';
 }
 
-int postfixtoAnswer(char equation[100]) {
+int postfixToAnswer(char equation[100]) {
     int i = 0;
     int num1, num2;
     while (equation[i] != '\0') {
-        if (equation[i] <= '9' && equation[i] >= '0') {
-            push(equation[i] - '0');
+        if (equation[i] >= '0' && equation[i] <= '9') {
+            push(equation[i] - '0'); // Convert char to int
         } 
         else {
             num1 = pop();
@@ -110,14 +110,15 @@ int postfixtoAnswer(char equation[100]) {
             switch (equation[i]) {
                 case '+':
                     push(num1 + num2);break;
-                case '-':                
+                case '-':
                     push(num1 - num2);break;
                 case '*':
                     push(num1 * num2);break;
                 case '/':
                     push(num1 / num2);break;
                 case '^':
-                    push(pow(num1,num2));break;
+                    push((int)pow(num1, num2)); // Convert double to int
+                    break;
             }
         }
         i++;
@@ -134,7 +135,7 @@ int main() {
 
     printf("Postfix expression: %s\n", postfix);
 
-    int answer = postfixtoAnswer(postfix);
+    int answer = postfixToAnswer(postfix);
     printf("Answer: %d\n", answer);
     return 0;
 }
