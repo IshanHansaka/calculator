@@ -105,8 +105,8 @@ int postfixToAnswer(char equation[100]) {
             push(equation[i] - '0'); // Convert char to int
         } 
         else {
-            num1 = pop();
             num2 = pop();
+            num1 = pop();
             switch (equation[i]) {
                 case '+':
                     push(num1 + num2);break;
