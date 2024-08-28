@@ -63,27 +63,27 @@ void infixToPostfix(char equation[100]) {
     char next;
     while (equation[i] != '\0') {
         switch (equation[i]) {
-        case '(':
-            push(equation[i]);
-            break;
-        case ')':
-            while ((next = pop()) != '(') {
-                arr[arr_index++] = next;
-            }
-            break;
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-        case '^':
-            while (!isEmpty() && precedence(equation[i]) <= precedence(peak())) {
-                arr[arr_index++] = pop();
-            }
-            push(equation[i]);
-            break;
-        default:
-            arr[arr_index++] = equation[i];
-            break;
+            case '(':
+                push(equation[i]);
+                break;
+            case ')':
+                while ((next = pop()) != '(') {
+                    arr[arr_index++] = next;
+                }
+                break;
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+            case '^':
+                while (!isEmpty() && precedence(equation[i]) <= precedence(peak())) {
+                    arr[arr_index++] = pop();
+                }
+                push(equation[i]);
+                break;
+            default:
+                arr[arr_index++] = equation[i];
+                break;
         }
         i++;
     }
@@ -92,6 +92,9 @@ void infixToPostfix(char equation[100]) {
         arr[arr_index++] = pop();
     }
     arr[arr_index] = '\0';
+}
+
+int postfixtoAnswer(char equation[100]) {
 }
 
 int main() {
