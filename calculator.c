@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
+
 #define Max_size 100
 
 char postfix[Max_size];
@@ -13,6 +15,7 @@ char pop();
 char peak();
 int precedence(char symbol);
 void infixToPostfix(char equation[100]);
+int postfixtoAnswer(char equation[100]);
 
 bool isEmpty() {
     return top == -1;
@@ -114,7 +117,7 @@ int postfixtoAnswer(char equation[100]) {
                 case '/':
                     push(num1 / num2);break;
                 case '^':
-                    push(num1 ^ num2);break;
+                    push(pow(num1,num2));break;
             }
         }
         i++;
